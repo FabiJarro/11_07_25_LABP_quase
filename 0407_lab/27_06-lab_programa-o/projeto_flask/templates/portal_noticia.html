@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Notícias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+        nav button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        nav button:hover {
+            background-color: #666;
+        }
+        .noticias-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: #666;
+        }
+        .noticias-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .noticia {
+            background-color: white;
+            width: 300px;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .noticia h3 {
+            margin-top: 0;
+        }
+        .noticia p {
+            color: #666;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Portal de Notícias</h1>
+    </header>
+    <nav>
+        <button onclick="filtrarNoticias('todas')">Todas</button>
+        <button onclick="filtrarNoticias('esportes')">Esportes</button>
+        <button onclick="filtrarNoticias('entretenimento')">Entretenimento</button>
+        <button onclick="filtrarNoticias('lazer')">Lazer</button>
+    </nav>
+    <div class="noticias-container" id="noticias">
+        <!-- As notícias serão carregadas aqui -->
+    </div>
+    <footer>
+        Portal de Notícias © 2023
+    </footer>
+
+    <script>
+        // Dados das notícias
+        const noticias = [
+            { titulo: "Time vence campeonato", categoria: "esportes", descricao: "O time local ganhou o campeonato estadual." },
+            { titulo: "Novo filme estreia", categoria: "entretenimento", descricao: "O novo filme do diretor famoso estreia sexta." },
+            { titulo: "Dicas para viagem", categoria: "lazer", descricao: "Conheça os melhores destinos para suas férias." },
+            { titulo: "Jogador se transfere", categoria: "esportes", descricao: "O jogador anunciou sua transferência para outro clube." },
+            { titulo: "Série renovada", categoria: "entretenimento", descricao: "A série favorita terá mais uma temporada." },
+            { titulo: "Parque reabre", categoria: "lazer", descricao: "O parque da cidade reabre após reformas." },
+            { titulo: "Treino para iniciantes", categoria: "esportes", descricao: "Confira este treino simples para começar." },
+            { titulo: "Show gratuito", categoria: "entretenimento", descricao: "Artista fará show gratuito no centro." },
+            { titulo: "Rota de bicicleta", categoria: "lazer", descricao: "Nova rota para ciclistas é inaugurada." }
+        ];
+        // Carrega a última categoria selecionada do localStorage
+        let ultimaCategoria = localStorage.getItem('ultimaCategoria') || 'todas';
+        // Função para filtrar notícias
+        function filtrarNoticias(categoria) {
+            ultimaCategoria = categoria;
+            localStorage.setItem('ultimaCategoria', categoria);
+            const container = document.getElementById('noticias');
+            container.innerHTML = '';
+            
+            const noticiasFiltradas = categoria === 'todas' 
+                ? noticias 
+                : noticias.filter(noticia => noticia.categoria === categoria);
+            
+            noticiasFiltradas.forEach(noticia => {
+                const div = document.createElement('div');
+                div.className = 'noticia';
+                div.innerHTML = `
+                    <h3>${noticia.titulo}</h3>
+                    <p>${noticia.descricao}</p>
+                    <button onclick="verNoticia('${noticia.titulo}')">Ler mais</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+        // Função simulada para ver uma notícia
+        function verNoticia(titulo) {
+            alert(`Abrindo notícia: ${titulo}\n(Pagina da notícia seria carregada aqui)`);
+        }
+        // Carrega as notícias quando a página é aberta
+        window.onload = function() {
+            filtrarNoticias(ultimaCategoria);
+        };
+    </script>
+</body>
+</html>

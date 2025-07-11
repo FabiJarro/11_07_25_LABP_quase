@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-Vindo</title>
+</head>
+<body style="background-color:{{novacor}}">
+
+
+    <form method="post" action="/cor">
+
+    <h1>Bem Vindo, {{user}}!</h1>
+    <p>Qual cor você deseja escolher?</p>
+
+
+    <label for="cores">Escolha uma cor:</label>
+
+    <select name="cor" id="cor">
+
+    <option value="#0000FF">azul</option>
+    <option value="#FFFF00">vermelho</option>
+    <option value="FF0000">amarelo</option>
+    <option value="#00FF00">verde</option>
+    </select>   
+
+    <!-- #0000FF, #FFFF00, #FF0000 e #00FF00. -->
+
+    <p> 
+        <input type="submit" value="Mudar cor" /> 
+     </p>
+    
+
+
+
+    </form>
+
+    <form method="post" action="/login">
+    <p> 
+        <input type="submit" value="Sair" /> 
+    </p>
+    </form>
+
+
+
+</body>
+</html>
+
+
