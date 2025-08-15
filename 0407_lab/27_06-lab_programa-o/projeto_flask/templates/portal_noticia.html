@@ -1,136 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Notícias</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background-color: #444;
-            padding: 10px;
-            text-align: center;
-        }
-        nav button {
-            background-color: #555;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-        nav button:hover {
-            background-color: #666;
-        }
-        .noticias-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            background-color: #666;
-        }
-        .noticias-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-        }
-        .noticia {
-            background-color: white;
-            width: 300px;
-            margin: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .noticia h3 {
-            margin-top: 0;
-        }
-        .noticia p {
-            color: #666;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Portal de Notícias Teen</title>
+
+  <style>
+    /* body { font-family: Arial; background-color: #fff0f5; } */
+    nav a { margin: 0 15px; color: #d63384; font-weight: bold; text-decoration: none; }
+    section { padding: 20px; margin: 20px; background: white; border-radius: 10px; }
+    /* h2 { color: #d63384; }  */
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      color: #333;
+      background-color:{{novotema_noticias}}; 
+      color: {% if novotema_noticias == '#fff0f5' %} black{% else %}white{% endif %};"
+    }
+    
+    header {
+      background-color: #ff69b4;
+      background-color: {% if novotema_noticias == '#fff0f5' %} #ff69b4{% else %}#1D1D1D{% endif %};
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+    nav {
+      background-color: #ffe4e1;
+      
+      background-color: {% if novotema_noticias == '#fff0f5' %} #ffe4e1{% else %}#575757{% endif %};
+      
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 10px 0;
+    }
+    nav a {
+      text-decoration: none;
+      color: #d63384;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    section {
+      /* background-color: white; */
+      background-color: {% if novotema_noticias == '#fff0f5' %} white{% else %}#1D1D1D{% endif %};
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h2 {
+      /* color: #d63384; */
+      color:{% if novotema_noticias == '#fff0f5' %} #d63684{% else %}#b81469{% endif %};
+    }
+
+    .last_conteiner{
+      float: right;
+      display: inline-block
+      
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Portal de Notícias</h1>
-    </header>
-    <nav>
-        <button onclick="filtrarNoticias('todas')">Todas</button>
-        <button onclick="filtrarNoticias('esportes')">Esportes</button>
-        <button onclick="filtrarNoticias('entretenimento')">Entretenimento</button>
-        <button onclick="filtrarNoticias('lazer')">Lazer</button>
-    </nav>
-    <div class="noticias-container" id="noticias">
-        <!-- As notícias serão carregadas aqui -->
-    </div>
-    <footer>
-        Portal de Notícias © 2023
-    </footer>
 
-    <script>
-        // Dados das notícias
-        const noticias = [
-            { titulo: "Time vence campeonato", categoria: "esportes", descricao: "O time local ganhou o campeonato estadual." },
-            { titulo: "Novo filme estreia", categoria: "entretenimento", descricao: "O novo filme do diretor famoso estreia sexta." },
-            { titulo: "Dicas para viagem", categoria: "lazer", descricao: "Conheça os melhores destinos para suas férias." },
-            { titulo: "Jogador se transfere", categoria: "esportes", descricao: "O jogador anunciou sua transferência para outro clube." },
-            { titulo: "Série renovada", categoria: "entretenimento", descricao: "A série favorita terá mais uma temporada." },
-            { titulo: "Parque reabre", categoria: "lazer", descricao: "O parque da cidade reabre após reformas." },
-            { titulo: "Treino para iniciantes", categoria: "esportes", descricao: "Confira este treino simples para começar." },
-            { titulo: "Show gratuito", categoria: "entretenimento", descricao: "Artista fará show gratuito no centro." },
-            { titulo: "Rota de bicicleta", categoria: "lazer", descricao: "Nova rota para ciclistas é inaugurada." }
-        ];
-        // Carrega a última categoria selecionada do localStorage
-        let ultimaCategoria = localStorage.getItem('ultimaCategoria') || 'todas';
-        // Função para filtrar notícias
-        function filtrarNoticias(categoria) {
-            ultimaCategoria = categoria;
-            localStorage.setItem('ultimaCategoria', categoria);
-            const container = document.getElementById('noticias');
-            container.innerHTML = '';
-            
-            const noticiasFiltradas = categoria === 'todas' 
-                ? noticias 
-                : noticias.filter(noticia => noticia.categoria === categoria);
-            
-            noticiasFiltradas.forEach(noticia => {
-                const div = document.createElement('div');
-                div.className = 'noticia';
-                div.innerHTML = `
-                    <h3>${noticia.titulo}</h3>
-                    <p>${noticia.descricao}</p>
-                    <button onclick="verNoticia('${noticia.titulo}')">Ler mais</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-        // Função simulada para ver uma notícia
-        function verNoticia(titulo) {
-            alert(`Abrindo notícia: ${titulo}\n(Pagina da notícia seria carregada aqui)`);
-        }
-        // Carrega as notícias quando a página é aberta
-        window.onload = function() {
-            filtrarNoticias(ultimaCategoria);
-        };
-    </script>
+  <header>
+    <h1>Portal de Notícias</h1>
+    <p>Bem-vindo(a), {{ user }}!</p>
+  </header>
+
+  <nav>
+    <a href="{{ url_for('esportes') }}">Esportes</a>
+    <a href="{{ url_for('lazer') }}">Lazer</a>
+    <a href="{{ url_for('entretenimento') }}">Entretenimento</a>
+  </nav>
+
+  <div class="container">
+    
+    <section id="esportes">
+      <h2>Meninas brilham nos Jogos Escolares!</h2>
+      <p>
+        Garotas de todo o Brasil estão mostrando talento no esporte. Larissa Silva, de 15 anos, ganhou três ouros na natação, 
+        e Ana Júlia, de 16, liderou sua equipe à vitória no vôlei. O evento teve mais de 5 mil atletas femininas, oficinas de autoestima 
+        e muita inspiração. A nova geração teen está mostrando que esporte também é lugar de menina!
+      </p>
+    </section>
+
+    <section id="lazer">
+      <h2>Festival Teen de Inverno anima as férias!</h2>
+      <p>
+        O evento reuniu milhares de garotas com shows de artistas teens, oficinas de moda, estúdio de dança e muita diversão em Belo Horizonte. 
+        O clima foi de amizade, autoestima e curtição, mostrando que as férias são o momento ideal para se conectar com amigas 
+        e se divertir com estilo!
+      </p>
+    </section>
+
+    <section id="entretenimento">
+      <h2>Série teen "Corações em Met" vira sucesso nas redes!</h2>
+      <p>
+        A série "Corações em Met", recém-lançada em uma plataforma de streaming, está conquistando o público jovem com romance, 
+        amizade e muita representatividade. Protagonizada por atrizes teens brasileiras, a trama mostra os desafios e descobertas da adolescência 
+        na era digital. Já virou tendência no TikTok e promete ser o novo vício das férias!
+      </p>
+    </section>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;"></div>
+
+      <form action="/bemvindo" method="get" style="margin: 0;">
+        <button style="background-color: {% if novotema_noticias == '#fff0f5' %} #d63384{% else %}#b81469{% endif %}; color: white; border: none; padding: 10px 20px; border-radius: 8px;">
+          Voltar
+        </button>
+      </form>
+
+      <br>
+
+      <form method="post" action="/tema_noticias" style="margin: 0; display: flex; align-items: center; gap: 10px;"></form>
+
+      <form method="post" action="/tema_noticias" style="margin: 0; display: flex; align-items: center; gap: 10px;">
+        <label for="tema_noticias">Escolha um tema:</label>
+        <select name="tema_noticias" id="tema_noticias">
+          <option value="#fff0f5">tema claro</option>
+          <option value="#000000">tema escuro</option>
+        </select>
+        <input type="submit" value="Mudar tema" />
+    </form>  
+
+    </div>
+    
+
+
+  </div>
+    
 </body>
 </html>

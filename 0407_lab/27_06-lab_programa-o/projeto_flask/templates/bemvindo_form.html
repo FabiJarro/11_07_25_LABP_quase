@@ -5,42 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-Vindo</title>
 </head>
-<body style="background-color:{{novacor}}">
+<body style="background-color:{{novotema}}; 
+    color: {% if novotema == '#000000' %} white{% else %}black{% endif %};">
 
-
-    <form method="post" action="/cor">
+    <form method="post" action="/tema">
 
     <h1>Bem Vindo, {{user}}!</h1>
-    <p>Qual cor você deseja escolher?</p>
+    <p>Qual tema vc deseja escollher?</p>
 
+    <label for="temas">Escolha uma cor:</label>
 
-    <label for="cores">Escolha uma cor:</label>
+    <select name="tema" id="tema">
 
-    <select name="cor" id="cor">
-
-    <option value="#0000FF">azul</option>
-    <option value="#FFFF00">vermelho</option>
-    <option value="FF0000">amarelo</option>
-    <option value="#00FF00">verde</option>
-    </select>   
-
-    <!-- #0000FF, #FFFF00, #FF0000 e #00FF00. -->
+    <option value="#ffffff">tema claro</option>
+    <option value="#000000">tema escuro</option>
+    </select>
 
     <p> 
-        <input type="submit" value="Mudar cor" /> 
-     </p>
-    
-
-
-
+        <input type="submit" value="Mudar tema" /> 
+    </p>
     </form>
 
-    <form method="post" action="/login">
+
+
+    <form method="get" action="/logout">
     <p> 
         <input type="submit" value="Sair" /> 
     </p>
     </form>
 
+    <p>A página foi acessado {{acessos}} vez(es) durante esta sessão </p>
+
+    <br>
+    <br>
+
+    <form method="post" action="/noticias">
+        <button type="submit">Portal de Notícias</button>
+    </form>
+    
 
 
 </body>
